@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "name": "subagent-workflow",
+  "templateVersion": "0.6.1",
+  "source": {
+    "repo": "https://github.com/jbeat30/claude-subagent-workflow",
+    "templateVersion": "0.6.1",
+    "tag": null,
+    "commit": "57d6fbec99bc14d1fa0ec6336c13cad78fa22a98"
+  },
+  "installedAt": "2026-11-04T05:39:01.022Z",
+  "files": [
+    {
+      "path": ".claude/subagent/profile.md",
+      "sha256": "1065a7ea5ef598d6af84929907dff434bfd70129ce6bd0b477a6644c24d02569"
+    }
+  ],
+  "skipped": [],
+  "settings": {
+    "hooks": [],
+    "agent": {
+      "action": "none",
+      "previous": null
+    }
+  },
+  "mcp": {},
+  "gitignore": "added",
+  "backups": null
+}

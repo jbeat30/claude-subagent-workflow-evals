@@ -1,0 +1,7 @@
+{
+  "name": "signup",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "dependencies": { "zod": "3.22.4" }
+}

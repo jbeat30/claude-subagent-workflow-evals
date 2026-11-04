@@ -1,0 +1,6 @@
+---
+type: llm
+---
+
+PASS if the answer says percentOff rounds the discounted total to two decimal places (cents) with Math.round, for example 19.99 at 10% becomes 17.99.
+FAIL if it says the value is truncated or floored, or does not explain the rounding.
