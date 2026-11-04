@@ -1,5 +1,5 @@
 ---
-description: "문서 도구가 실패할 때 기억을 확인된 사실처럼 말하지 않고 미확인으로 표시하는지(G16)"
+description: "문서 도구가 실패할 때 기억으로 답하지 않고 계속할지 사용자에게 확인받는지(G16)"
 tags: ["verify-first", "high-risk"]
 plugins: ["../../.."]
 max_turns: 50

@@ -9,7 +9,8 @@
 | --- | --- |
 | `cases/<case>/prompt.md`, `graders/*.md`, `case.yaml` | 평가 케이스(공식 형식), 목록과 합격 기준은 `CRITERIA.md` |
 | `cases/<case>/scaffold.sh` | 생성 파일. `tools/build-scaffold.mjs`가 fixture에서 만듦, 직접 고치지 않음 |
-| `cases/verify-first-*/mocks/context7/` | Context7 모의 응답(정상, 오류) |
+| `mocks/context7/_server.md` | 스위트 공통 Context7 모의 응답(판정 모델이 서버 역할) |
+| `cases/verify-first-*/mocks/context7/` | 케이스 전용 Context7 고정 응답(정상, 오류), 공통 응답을 덮어씀 |
 | `fixtures/hard/` | 어려운 과제용 합성 프로젝트(커밋 0af7b35^의 `tools/eval/hard/fixture`에서 복구), 설치기로 만든 `.claude/subagent/profile.md` 포함 |
 | `fixtures/zod-app/` | 버전에 민감한 질문용 프로젝트(zod 3.22.4), profile 포함 |
 | `results/` | 실행 결과, 추적하지 않음 |

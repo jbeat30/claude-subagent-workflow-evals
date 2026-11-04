@@ -1,5 +1,8 @@
 # 합격 기준 (실행 전 고정, 2026-11-04)
 
+변경 이력
+- 2026-11-04: Context7 공통 모의 응답 추가(새 정책에서 문서 도구가 없으면 확인 질문으로 멈추므로). 문서 확인 실패 시 미확인으로 계속하던 방식을 사용자 확인으로 바꿔(소유자 결정) verify-first-no-docs의 기대 동작을 바꿈. 발동 기준을 trigger-natural 5/6, no-trigger 6/6으로 나눔. 실행 전 변경
+
 근거: 플러그인 저장소 로컬 문서 `docs/planning/V1_FINAL_PLAN.md` 11절, `V1_ROADMAP.md` 12.5
 결과를 보고 기준을 바꾸지 않음. 바꿀 때는 이 파일에 날짜와 이유를 남기고 다음 실행부터 적용
 
@@ -19,7 +22,7 @@
 | review-readonly | 새로 | 수정 없는 근거 있는 검토 | 채택 판단 |
 | cross-domain | 새로 | 직무 밖 영역의 쉬운 설명 | 채택 판단 |
 | verify-first-docs | 새로 | Context7 확인과 출처(모의 응답) | 확인 먼저 |
-| verify-first-no-docs | 새로 | 문서 도구 실패 시 미확인 표시(모의 오류) | 확인 먼저, 고위험 |
+| verify-first-no-docs | 새로 | 문서 도구 실패 시 기억으로 답하지 않고 사용자 확인(모의 오류) | 확인 먼저, 고위험 |
 
 ## 단계별 기준
 
@@ -33,14 +36,17 @@
 | 질문 정책(ambiguous-turn1, risky-change) | 케이스 점수 1.0인 실행이 6회 중 5회 이상 | G12 |
 | 어려운 과제(api-contract, implicit-req) | Δ가 0보다 큼 | G5 |
 | 확인 먼저(verify-first-docs) | sourced-answer 6회 중 0회 실패 | G16 |
-| 발동(trigger-natural, no-trigger) | skill-fired 6회 중 6회, skill-not-fired 6회 중 6회 (제안, 소유자 확인 필요) | |
-| 등급(small-edit) | no-delegation 6회 중 5회 이상, 비용 기록 (제안, 소유자 확인 필요) | G6 |
+| 발동(trigger-natural) | skill-fired 6회 중 5회 이상. 놓쳐도 명령어로 부를 수 있어 고위험이 아님 | |
+| 비발동(no-trigger) | skill-not-fired 6회 중 6회. 평소 대화를 건드리지 않는다는 약속이라 한 번도 어기면 안 됨 | |
+| 등급(small-edit) | no-delegation 6회 중 5회 이상, 비용 기록 | G6 |
 | 채택 판단(review-readonly, cross-domain) | 합격선 없음. 기준선 대비 Δ를 보고 채택 여부 결정 | |
 
 ## 알려진 제약
 
-- 네이티브 Windows에는 셸 샌드박스가 없어 `Bash`를 허용하면 실행이 거부됨(공식 문서). Windows에서는 `Bash` 없이 돌리고, 검사 실행기와 `npm test`를 못 돌리므로 false-success의 정답은 "확인 못 함"이 됨. 테스트 실행까지 보려면 WSL2에서 실행
-- 플러그인 MCP 서버는 모의 응답이 있는 케이스(verify-first-*)에서만 Context7이 보임. 나머지 케이스에서는 Context7과 Jina가 없어 역할이 `unchecked`로 기록하는 것이 정상
+- 네이티브 Windows에는 셸 샌드박스가 없어 `Bash`나 `PowerShell`을 허용하면 평가 실행이 거부됨(공식 문서). 플러그인은 v0.7.0부터 PowerShell도 쓰지만 평가 도구가 셸을 막으므로, Windows 평가는 셸 없이 돌림. 이때 검사 실행기와 `npm test`가 돌지 않아 false-success의 정답은 "확인 못 함"이 됨
+- 셸이 필요한 동작(검사 실행기, `npm test`, PowerShell 경로)은 평가 스위트 밖에서 실제 `claude -p`로 따로 확인함. WSL2를 쓰면 스위트 안에서 Bash로 볼 수 있음
+- 평가에서는 플러그인 MCP 서버가 실제로 시작되지 않음. Context7은 스위트 공통 모의 응답(`mocks/context7/_server.md`, 판정 모델이 서버 역할)으로 실제 사용처럼 있게 하고, verify-first-*는 케이스 전용 고정 응답(정상, 오류)으로 덮어씀. Jina는 모의 응답이 없어 보이지 않음
+- 공통 모의 응답은 판정 모델을 써서 실행마다 답이 조금 다를 수 있고 비용이 조금 늘어남. 깨끗한 실행의 기록을 `mocks/.replay/`로 채택하면 이후에는 모델 호출 없이 같은 답을 씀
 - 다음은 아직 확인하지 못함. 점검 실행에서 확인
   - `Bash`를 허용하지 않은 평가 실행에서 스킬의 `!` 주입 명령이 실행되는지. 실패하면 모든 케이스가 스킬 로드 단계에서 멈춤
   - `claude -p`에서 `AskUserQuestion`이 어떻게 처리되는지. 질문 grader는 이 때문에 `focus: trace`로 판정
