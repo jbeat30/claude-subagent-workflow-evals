@@ -1,0 +1,2 @@
+# scaffold.sh가 bash로 실행되고 fixture 내용이 heredoc에 그대로 들어가므로 LF 고정
+* text=auto eol=lf
