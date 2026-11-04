@@ -22,6 +22,7 @@ const CASES = {
   'no-trigger': { fixture: 'hard' },
   'small-edit': { fixture: 'hard' },
   'ambiguous-turn1': { fixture: 'hard' },
+  'ambiguous-delegated': { fixture: 'hard' },
   'api-contract': { fixture: 'hard' },
   'implicit-req': { fixture: 'hard' },
   'false-success': { fixture: 'hard', extra: { 'test/legacy.test.js': LEGACY_FAILING_TEST } },
